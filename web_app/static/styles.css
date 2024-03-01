@@ -1,0 +1,65 @@
+body {
+    background-color: #f4f7f6;
+    font-family: 'Roboto', sans-serif !important; 
+}
+.app_title {
+    margin-bottom: 10px;
+    
+}
+#chat-container {
+    /* background-color: white; */
+    /* max-width: 600px; */
+    /* margin: 0 auto; */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    width: 100%; /* Makes the container fill the entire width */
+    background-color: #e9ecef;
+}
+
+.chat-display {
+    height: 70vh;
+    overflow-y: auto;
+    padding: 15px;
+    /* background-color: #e9ecef; */
+    border-radius: 5px;
+}
+
+.chat-display p {
+    margin: 0 0 10px 0;
+}
+
+p.user-message {
+    text-align: right;
+}
+
+p.user-message pre, p.bot-message pre {
+    white-space: pre-wrap; /* Allows long lines to wrap */
+    word-wrap: break-word; /* Breaks long words */
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e0f0ff;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+p.bot-message pre {
+    background-color: #f0f0f0;
+}
+
+.input-container {
+    display: flex; /* This makes the container a flex container */
+    justify-content: space-between; /* This will space out the children evenly */
+    align-items: center; /* This will vertically center align the children */
+    gap: 10px; /* Optional: adds space between the input and the button */
+}
+
+.form-control {
+    flex-grow: 1; /* Allows the input to take up as much space as possible */
+}
+
+.btn {
+    flex-shrink: 0; /* Prevents the button from shrinking if space is limited */
+    background-color: #e0f0ff !important; /* Light blue color */
+    border-color: #ced4da !important;
+    color: #333 !important;
+}
