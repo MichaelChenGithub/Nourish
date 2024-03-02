@@ -8,7 +8,6 @@ from langchain.agents.format_scratchpad.openai_tools import format_to_openai_too
 from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputParser
 from langchain.agents import AgentExecutor
 from dotenv import load_dotenv
-import markdown
 from langchain.agents import initialize_agent
 
 
@@ -55,7 +54,7 @@ def execute_chat(input_message, chat_history):
     chat_history.extend(
         [
             HumanMessage(content=input_message),
-            AIMessage(content=markdown.markdown(result["output"])),
+            AIMessage(content=result["output"]),
         ]
     )
     return result["output"]

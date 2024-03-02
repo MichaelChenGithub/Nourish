@@ -1,0 +1,15 @@
+<!-- templates/records.html -->
+{% extends "base.html" %}
+
+{% block title %}飲食紀錄{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h3 class="mb-4">飲食紀錄</h3>
+        <div class="table-responsive">
+            {{ records_html | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -40,6 +40,8 @@ p.user-message pre, p.bot-message pre {
     background-color: #e0f0ff;
     color: #333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    font-family: 'Roboto', sans-serif !important; 
 }
 
 p.bot-message pre {
@@ -62,4 +64,33 @@ p.bot-message pre {
     background-color: #e0f0ff !important; /* Light blue color */
     border-color: #ced4da !important;
     color: #333 !important;
+}
+
+/* 飲食紀錄表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Add some spacing between table and other elements */
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th {
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
 }
