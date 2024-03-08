@@ -2,21 +2,46 @@ body {
     background-color: #f4f7f6;
     font-family: 'Roboto', sans-serif !important; 
 }
-.app_title {
+.header {
     margin-bottom: 10px;
-    
 }
+.app_title {
+    /* margin-bottom: 10px; */
+    font-size: 28px; /* 调整标题大小 */
+    font-family: "Madimi One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #4C8C4A;
+}
+.nav-button {
+    padding: 5px 10px; /* 增加按钮内部的填充，使其更大，更易于点击 */
+    font-weight: bold; /* 使按钮文字加粗 */
+    border: none; /* 移除边框 */
+    background-color: transparent; /* 背景设为透明 */
+    color: #4C8C4A;
+    text-decoration: none;
+}
+
+.nav-button:hover, .nav-button:focus {
+    background-color: transparent; /* 鼠标悬停和聚焦时保持背景透明 */
+    color: #76B07B; 
+}
+
+.button-divider {
+    color: #adb5bd; /* 分隔符的颜色 */
+}
+
 #chat-container {
     /* background-color: white; */
     /* max-width: 600px; */
     /* margin: 0 auto; */
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     width: 100%; /* Makes the container fill the entire width */
-    background-color: #e9ecef;
+    background-color: #F0F0F0;
 }
 
 .chat-display {
-    height: 70vh;
+    height: 60vh;
     overflow-y: auto;
     padding: 15px;
     /* background-color: #e9ecef; */
@@ -37,15 +62,15 @@ p.user-message pre, p.bot-message pre {
     display: inline-block;
     padding: 10px;
     border-radius: 10px;
-    background-color: #e0f0ff;
-    color: #333;
+    background-color: #4C8C4A;
+    color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 80%;
     font-family: 'Roboto', sans-serif !important; 
 }
 
 p.bot-message pre {
-    background-color: #f0f0f0;
+    background-color: #4A4A4A;
 }
 
 .input-container {
@@ -53,6 +78,7 @@ p.bot-message pre {
     justify-content: space-between; /* This will space out the children evenly */
     align-items: center; /* This will vertically center align the children */
     gap: 10px; /* Optional: adds space between the input and the button */
+    
 }
 
 .form-control {
@@ -61,36 +87,7 @@ p.bot-message pre {
 
 .btn {
     flex-shrink: 0; /* Prevents the button from shrinking if space is limited */
-    background-color: #e0f0ff !important; /* Light blue color */
-    border-color: #ced4da !important;
-    color: #333 !important;
-}
-
-/* 飲食紀錄表格样式 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px; /* Add some spacing between table and other elements */
-}
-
-th, td {
-    padding: 8px;
-    text-align: center;
-}
-
-thead {
-    background-color: #007bff;
-    color: white;
-}
-
-th {
-    font-weight: bold;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tbody tr:hover {
-    background-color: #ddd;
+    background-color: #4C8C4A !important; /* Light blue color */
+    border-color: #4C8C4A !important;
+    color: white !important;
 }

@@ -4,12 +4,23 @@
 {% block title %}飲食紀錄{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <h3 class="mb-4">飲食紀錄</h3>
-        <div class="table-responsive">
-            {{ records_html | safe }}
-        </div>
-    </div>
+<link rel="stylesheet" href="{{ url_for('static', filename='records.css')}}">
+<div id="records-container" class="border p-3 rounded ">
+    <table class="table table-responsive ">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Cal</th>
+            <th>Carb</th>
+            <th>Protein</th>
+            <th>Fat</th>
+          </tr>
+        </thead>
+        <tbody id="foodLog">
+        </tbody>
+    </table>
+    <!-- <button id="addRow" class="btn btn-primary">新增记录</button> -->
 </div>
+
+<script src="{{ url_for('static', filename='records.js') }}"></script>
 {% endblock %}

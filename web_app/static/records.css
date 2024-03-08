@@ -1,0 +1,50 @@
+#records-container {
+    width: 100%; /* 使容器填充整个宽度 */
+    background-color: #F0F0F0; /* 容器背景色 */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse; /* 折叠边框，移除双边框的效果 */
+
+}
+
+.table th, .table td {
+    padding: 8px;
+    text-align: center; /* 单元格内文字居中 */
+}
+
+.table th {
+    background-color: #4C8C4A; /* 表头背景色 */
+    color: white; /* 表头文字颜色 */
+}
+
+/* 移除最后一行单元格的底部边框 */
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 表格行之间的横向分隔线 */
+.table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #ddd; /* 为每行底部添加灰色的横线，除了最后一行 */
+}
+
+/* 表头左上角圆角 */
+.table thead tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+/* 表头右上角圆角 */
+.table thead tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+/* 最后一行单元格左下角圆角 */
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+/* 最后一行单元格右下角圆角 */
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
