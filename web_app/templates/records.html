@@ -6,21 +6,31 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='records.css')}}">
 <div id="records-container" class="border p-3 rounded ">
-    <table class="table table-responsive ">
-        <thead>
+  <h4>You've already eaten today...</h4>
+  <table class="table">
+      <thead>
           <tr>
-            <th>Food</th>
-            <th>Cal</th>
-            <th>Carb</th>
-            <th>Protein</th>
-            <th>Fat</th>
+              <th>食物</th>
+              <th>熱量</th>
+              <th>碳水化合物</th>
+              <th>蛋白質</th>
+              <th>脂肪</th>
           </tr>
-        </thead>
-        <tbody id="foodLog">
-        </tbody>
-    </table>
-    <!-- <button id="addRow" class="btn btn-primary">新增记录</button> -->
+      </thead>
+      <tbody>
+          {% for record in records %}
+          <tr>
+              <td>{{ record.Food }}</td>
+              <td>{{ record.Cal }}</td>
+              <td>{{ record.Carb }}</td>
+              <td>{{ record.Protein }}</td>
+              <td>{{ record.Fat }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  <h4>Diet objective</h4>
+  <div>{{ diet_objective }}</div>
 </div>
-
-<script src="{{ url_for('static', filename='records.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='records.js') }}"></script> -->
 {% endblock %}

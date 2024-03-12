@@ -10,7 +10,7 @@ Leveraging the latest research from the Journal of the American Medical Associat
 
 - **Programming Languages:** Python, Javascript
 - **Frameworks & Libraries:** OpenAI Assistant API, Langchain, Flask
-- **Tools & Platforms:** Streamlit
+- **Database:** MongoDB Atlas
 
 ## Key Features
 

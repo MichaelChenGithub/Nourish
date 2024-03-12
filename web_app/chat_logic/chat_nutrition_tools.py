@@ -1,6 +1,10 @@
 from langchain.tools import StructuredTool
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain_community.utilities import GoogleSearchAPIWrapper
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import MongoDBAtlasVectorSearch
+from langchain.tools.retriever import create_retriever_tool
+from pymongo.mongo_client import MongoClient
 import os
 import requests
 
@@ -12,7 +16,7 @@ class NutritionTools:
             "x-app-key": os.getenv("NUTRITIONNIX_APP_KEY"),
             "API-key": "1"
         }
-
+        self.db_uri = "mongodb+srv://michael:XtDdgICBBjQtEUuX@nourish.optsg9l.mongodb.net/?retryWrites=true&w=majority&appName=Nourish"
     # def search_meal_by_name(self, query):
     #     """
     #     Searches for meal information by name using TheMealDB API.
@@ -67,7 +71,18 @@ class NutritionTools:
     def top_results(self, query):
         search = GoogleSearchAPIWrapper()
         return search.results(query, 3)
-
+    
+    def rag_knowledge(self):
+        uri = self.db_uri
+        # Create a new client and connect to the server
+        client = MongoClient(uri)
+        dbName = "nutri_knowledge"
+        collectionName = "usaid_handbook"
+        collection = client[dbName][collectionName]
+        embeddings = OpenAIEmbeddings()
+        vectorStore = MongoDBAtlasVectorSearch(collection, embeddings)
+        retriever = vectorStore.as_retriever()
+        return retriever
     
 # class RecipeInput(BaseModel):
 #     query: str = Field(description="food name")
@@ -111,6 +126,14 @@ def get_tools():
         args_schema=GoogleSearch
     )
     
+
+    retriever = nutrition_tools.rag_knowledge()
+
+    rag_knowledge_tool = create_retriever_tool(
+        retriever,
+        "search_nutrition_knowledge",
+        "Searches and returns nutrition knowledge.",
+    )
     # tools = [recipe_tool, nutrition_tool, restaurant_food_tool, google_search_tool]
-    tools = [nutrition_tool, google_search_tool]
+    tools = [nutrition_tool, google_search_tool, rag_knowledge_tool]
     return tools

@@ -6,7 +6,6 @@
 .table {
     width: 100%;
     border-collapse: collapse; /* 折叠边框，移除双边框的效果 */
-
 }
 
 .table th, .table td {
