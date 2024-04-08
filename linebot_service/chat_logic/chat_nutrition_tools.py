@@ -5,8 +5,11 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 from langchain.tools.retriever import create_retriever_tool
 from pymongo.mongo_client import MongoClient
-import os
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class NutritionTools:
     def __init__(self):
@@ -17,18 +20,6 @@ class NutritionTools:
             "API-key": "1"
         }
         self.db_uri = os.getenv("MONGODB_URI")
-    # def search_meal_by_name(self, query):
-    #     """
-    #     Searches for meal information by name using TheMealDB API.
-    #     """
-    #     url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={query}"
-
-    #     try:
-    #         response = requests.get(url, headers={"API-key": self.headers["API-key"]})
-    #         response.raise_for_status()
-    #         return response.text
-    #     except requests.exceptions.RequestException as e:
-    #         return f"Error: {e}"
 
     def get_nutrition_with_nlp(self, query):
         """
@@ -48,25 +39,6 @@ class NutritionTools:
             return saved_response
         except requests.exceptions.RequestException as e:
             return f"Error: {e}"
-
-    # def find_restaurant_food(self, query):
-    #     """
-    #     Searches for branded foods in the Nutritionix API based on the search query.
-    #     """
-    #     url = f"https://trackapi.nutritionix.com/v2/search/instant/?query={query}"
-
-    #     try:
-    #         response = requests.get(url, headers=self.headers)
-    #         response.raise_for_status()
-    #         branded_food = response.json()["branded"]
-    #         saved_response = []
-    #         for food in branded_food:
-    #             keys_to_save = set(['food_name', 'brand_name_item_name', 'brand_name'])
-    #             saved_food_info = {key: value for key, value in food.items() if key in keys_to_save}
-    #             saved_response.append(saved_food_info)
-    #         return saved_response
-    #     except requests.exceptions.RequestException as e:
-    #         return f"Error: {e}"
         
     def top_results(self, query):
         search = GoogleSearchAPIWrapper()
