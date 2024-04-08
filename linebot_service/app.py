@@ -1,5 +1,5 @@
 from flask import Flask, request
-from chat_logic import chat_logic_main as chat
+from chat_logic.chat_logic_main import execute_chat
 import json
 from linebot.v3 import WebhookHandler
 from linebot import LineBotApi, WebhookHandler
@@ -51,7 +51,7 @@ class LineBotApp:
                     print(f'User:{msg}')
                     chat_history.append({"role": "user", "content": msg})
                     
-                    reply = str(chat.execute_chat(msg,chat_history))
+                    reply = str(execute_chat(msg,chat_history))
                     print(f"reply:{reply}")
                     chat_history.append({"role": "assistant", "content": reply})
                     print(chat_history)
