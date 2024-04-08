@@ -73,15 +73,19 @@ class NutritionTools:
         return search.results(query, 3)
     
     def rag_knowledge(self):
-        uri = self.db_uri
-        # Create a new client and connect to the server
-        client = MongoClient(uri)
-        dbName = "nutri_knowledge"
-        collectionName = "usaid_handbook"
-        collection = client[dbName][collectionName]
-        embeddings = OpenAIEmbeddings()
-        vectorStore = MongoDBAtlasVectorSearch(collection, embeddings)
-        retriever = vectorStore.as_retriever()
+        DB_NAME = "nutri_knowledge"
+        COLLECTION_NAME = "usaid_handbook"
+        ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
+        vector_search = MongoDBAtlasVectorSearch.from_connection_string(
+            self.db_uri,
+            DB_NAME + "." + COLLECTION_NAME,
+            OpenAIEmbeddings(disallowed_special=()),
+            index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
+        )
+        retriever = vector_search.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 1},
+        )
         return retriever
     
 # class RecipeInput(BaseModel):

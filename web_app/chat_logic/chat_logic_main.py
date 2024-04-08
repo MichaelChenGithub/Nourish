@@ -48,6 +48,7 @@ agent = (
 
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
+
 # 定义执行聊天逻辑的函数
 def execute_chat(input_message, chat_history):
     result = agent_executor.invoke({"input": input_message, "chat_history": chat_history})
@@ -57,4 +58,5 @@ def execute_chat(input_message, chat_history):
             AIMessage(content=result["output"]),
         ]
     )
+    print("___________________________", result)
     return result["output"]

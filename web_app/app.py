@@ -66,7 +66,7 @@ def show_chat_page(*args, **kwargs):
     return render_template('index.html')
 
 @app.route('/chat', methods=['POST'])
-@token_required
+# @token_required
 def handle_chat_message(*args, **kwargs):
     current_user = kwargs.get('current_user')  # 从kwargs中获取current_user
     user_message = request.form['user_message']
