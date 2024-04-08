@@ -7,6 +7,7 @@ from linebot.models import TextSendMessage
 import os
 from dotenv import load_dotenv
 
+
 class LineBotApp:
     def __init__(self):
         self.app = Flask(__name__)
@@ -64,6 +65,8 @@ class LineBotApp:
                 print(body)
             return 'OK'
 
+line_bot_app = LineBotApp()
+app = line_bot_app.app
+
 if __name__ == "__main__":
-    line_bot_app = LineBotApp()
-    line_bot_app.app.run()
+    app.run()
