@@ -1,5 +1,5 @@
 from flask import Flask, request
-from chat_logic.chat_logic_main import execute_chat
+from .chat_logic.chat_logic_main import execute_chat
 import json
 from linebot.v3 import WebhookHandler
 from linebot import LineBotApi, WebhookHandler
