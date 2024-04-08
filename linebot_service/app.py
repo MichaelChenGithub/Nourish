@@ -31,48 +31,31 @@ class LineBotApp:
 
     def setup_routes(self):
         @self.app.route("/", methods=['POST'])
-        # def linebot():
-        #     body = request.get_data(as_text=True)
-        #     try:
-        #         json_data = json.loads(body)
-        #         signature = request.headers['X-Line-Signature']
-        #         self.handler.handle(body, signature)
-        #         tk = json_data['events'][0]['replyToken']
-        #         msg_type = json_data['events'][0]['message']['type']
-                
-        #         user_id = json_data['events'][0]['source']['userId']
-        #         if user_id not in self.user_chat_histories:
-        #             self.user_chat_histories[user_id] = []  # 為新用戶初始化聊天歷史
-                
-        #         chat_history = self.user_chat_histories[user_id]
-                
-        #         if msg_type == 'text':
-                    
-        #             msg = str(json_data['events'][0]['message']['text'])
-        #             print(f'User:{msg}')
-        #             chat_history.append({"role": "user", "content": msg})
-                    
-        #             reply = str(execute_chat(msg,chat_history))
-        #             print(f"reply:{reply}")
-        #             chat_history.append({"role": "assistant", "content": reply})
-        #             print(chat_history)
-        #         else:
-        #             reply = '你傳的不是文字呦～'
-        #         print(f'Reply:{reply}')
-        #         self.line_bot_api.reply_message(tk, TextSendMessage(reply))
-        #     except Exception as e:
-        #         print(e)
-        #         print(body)
-        #     return 'OK'
         def linebot():
             body = request.get_data(as_text=True)
             try:
                 json_data = json.loads(body)
+                signature = request.headers['X-Line-Signature']
+                self.handler.handle(body, signature)
                 tk = json_data['events'][0]['replyToken']
                 msg_type = json_data['events'][0]['message']['type']
+                
+                user_id = json_data['events'][0]['source']['userId']
+                if user_id not in self.user_chat_histories:
+                    self.user_chat_histories[user_id] = []  # 為新用戶初始化聊天歷史
+                
+                chat_history = self.user_chat_histories[user_id]
+                
                 if msg_type == 'text':
+                    
                     msg = str(json_data['events'][0]['message']['text'])
-                    reply = str(msg)
+                    print(f'User:{msg}')
+                    chat_history.append({"role": "user", "content": msg})
+                    
+                    reply = str(execute_chat(msg,chat_history))
+                    print(f"reply:{reply}")
+                    chat_history.append({"role": "assistant", "content": reply})
+                    print(chat_history)
                 else:
                     reply = '你傳的不是文字呦～'
                 print(f'Reply:{reply}')
