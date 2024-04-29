@@ -70,9 +70,9 @@ def show_chat_page(*args, **kwargs):
 def handle_chat_message(*args, **kwargs):
     current_user = kwargs.get('current_user')  # 从kwargs中获取current_user
     user_message = request.form['user_message']
-    if user_message == "What should I eat now?":
-        user_message = diet_objective + str(records_data) + "What should I eat now?"
-        print(user_message)
+    # if user_message == "What should I eat now?":
+    #     user_message = diet_objective + str(records_data) + "What should I eat now?"
+    #     print(user_message)
     response = execute_chat(user_message, chat_history)
     return response
 

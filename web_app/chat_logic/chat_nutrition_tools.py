@@ -123,6 +123,7 @@ def get_tools():
     #     description="Find restaurant food options",
     #     args_schema=RestaurantInput
     # )
+    
     google_search_tool = StructuredTool.from_function(
         func=nutrition_tools.top_results,
         name="google_search",

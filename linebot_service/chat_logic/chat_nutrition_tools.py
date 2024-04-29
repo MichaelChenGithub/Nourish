@@ -44,21 +44,21 @@ class NutritionTools:
         search = GoogleSearchAPIWrapper()
         return search.results(query, 3)
     
-    def rag_knowledge(self):
-        DB_NAME = "nutri_knowledge"
-        COLLECTION_NAME = "usaid_handbook"
-        ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
-        vector_search = MongoDBAtlasVectorSearch.from_connection_string(
-            self.db_uri,
-            DB_NAME + "." + COLLECTION_NAME,
-            OpenAIEmbeddings(disallowed_special=()),
-            index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
-        )
-        retriever = vector_search.as_retriever(
-            search_type="similarity",
-            search_kwargs={"k": 1},
-        )
-        return retriever
+    # def rag_knowledge(self):
+    #     DB_NAME = "nutri_knowledge"
+    #     COLLECTION_NAME = "usaid_handbook"
+    #     ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
+    #     vector_search = MongoDBAtlasVectorSearch.from_connection_string(
+    #         self.db_uri,
+    #         DB_NAME + "." + COLLECTION_NAME,
+    #         OpenAIEmbeddings(disallowed_special=()),
+    #         index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
+    #     )
+    #     retriever = vector_search.as_retriever(
+    #         search_type="similarity",
+    #         search_kwargs={"k": 1},
+    #     )
+    #     return retriever
     
 # class RecipeInput(BaseModel):
 #     query: str = Field(description="food name")
@@ -95,6 +95,7 @@ def get_tools():
     #     description="Find restaurant food options",
     #     args_schema=RestaurantInput
     # )
+    
     google_search_tool = StructuredTool.from_function(
         func=nutrition_tools.top_results,
         name="google_search",
@@ -103,13 +104,13 @@ def get_tools():
     )
     
 
-    retriever = nutrition_tools.rag_knowledge()
+    # retriever = nutrition_tools.rag_knowledge()
 
-    rag_knowledge_tool = create_retriever_tool(
-        retriever,
-        "search_nutrition_knowledge",
-        "Searches and returns nutrition knowledge.",
-    )
+    # rag_knowledge_tool = create_retriever_tool(
+    #     retriever,
+    #     "search_nutrition_knowledge",
+    #     "Searches and returns nutrition knowledge.",
+    # )
     # tools = [recipe_tool, nutrition_tool, restaurant_food_tool, google_search_tool]
-    tools = [nutrition_tool, google_search_tool, rag_knowledge_tool]
+    tools = [nutrition_tool, google_search_tool]
     return tools
