@@ -1,5 +1,5 @@
 from flask import Flask, request
-from chat_logic.chat_logic_main import execute_chat
+from chat_logic.chat_logic_main import Chat
 import json
 import requests
 from linebot.v3 import WebhookHandler
@@ -9,7 +9,7 @@ import os
 import logging
 from dotenv import load_dotenv
 
-
+load_dotenv()
 app = Flask(__name__)
 
 class LineBotApp:
@@ -18,7 +18,7 @@ class LineBotApp:
         self.secret = os.getenv('SECRET')
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
         self.subdomain = os.getenv('SUBDOMAIN')
-
+        self.chat = Chat()
         self.line_bot_api = LineBotApi(self.access_token)
         self.handler = WebhookHandler(self.secret)
         self.user_chat_histories = {}
@@ -65,7 +65,7 @@ class LineBotApp:
             ############### text ################
             if msg_type == 'text':
                 msg = str(json_data['events'][0]['message']['text']) 
-                reply = str(execute_chat(msg, []))
+                reply = str(self.chat.execute_chat(msg, []))
                 # self.record_manager.add_chat_record(user_id, "user", msg, user_information)
                 # reply = str(self.chat.execute_chat(msg, user_information['chat_history']))
                 # self.record_manager.add_chat_record(user_id, "assistant", reply, user_information)
@@ -91,7 +91,7 @@ class LineBotApp:
                 reply = "目前只支援文字訊息喔～"
 
             # Generate quick reply buttons
-            questions = self.generate_questions(msg_type, source_type)
+            questions = self.generate_questions()
             quick_reply_items = [QuickReplyButton(action=MessageAction(label=question, text=question)) for question in questions]
             quick_reply = QuickReply(items=quick_reply_items)
             
