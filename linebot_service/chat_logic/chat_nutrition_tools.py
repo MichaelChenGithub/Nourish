@@ -40,9 +40,9 @@ class NutritionTools:
         except requests.exceptions.RequestException as e:
             return f"Error: {e}"
         
-    def top_results(self, query):
-        search = GoogleSearchAPIWrapper()
-        return search.results(query, 3)
+    # def top_results(self, query):
+    #     search = GoogleSearchAPIWrapper()
+    #     return search.results(query, 3)
     
     # def rag_knowledge(self):
     #     DB_NAME = "nutri_knowledge"
