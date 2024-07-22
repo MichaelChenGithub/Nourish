@@ -96,12 +96,12 @@ def get_tools():
     #     args_schema=RestaurantInput
     # )
     
-    google_search_tool = StructuredTool.from_function(
-        func=nutrition_tools.top_results,
-        name="google_search",
-        description="Search Google for related results",
-        args_schema=GoogleSearch
-    )
+    # google_search_tool = StructuredTool.from_function(
+    #     func=nutrition_tools.top_results,
+    #     name="google_search",
+    #     description="Search Google for related results",
+    #     args_schema=GoogleSearch
+    # )
     
 
     # retriever = nutrition_tools.rag_knowledge()
@@ -112,5 +112,6 @@ def get_tools():
     #     "Searches and returns nutrition knowledge.",
     # )
     # tools = [recipe_tool, nutrition_tool, restaurant_food_tool, google_search_tool]
-    tools = [nutrition_tool, google_search_tool]
+    # tools = [nutrition_tool, google_search_tool]
+    tools = [nutrition_tool]
     return tools

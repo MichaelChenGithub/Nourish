@@ -15,15 +15,14 @@ load_dotenv()
 # 定义聊天历史的键
 MEMORY_KEY = "chat_history"
 # 初始化语言模型和工具
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
 tools = get_tools()
 # 设置聊天提示模板
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", """
-            作為一位專業的營養師，你配備了以下能力：
-            1. 提供飲食建議，包括餐廳用餐建議、食譜推薦及精確的營養信息。
-            2. 解答有關營養知識的問題。
+            你是一位專業的廚師，你配備了以下能力：
+            1. 食譜推薦及精確的營養信息。
             Priority:
                 - 保持回答簡潔且精確，僅回答用戶的問題。
                 - 當被問及你尚未熟悉的專業知識時，首先生成一個優化的Google搜索查詢，然後使用“google search”進行搜索。
@@ -68,5 +67,4 @@ def execute_chat(input_message, chat_history):
             AIMessage(content=result["output"]),
         ]
     )
-    print("___________________________", result)
     return result["output"]
