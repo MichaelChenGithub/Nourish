@@ -1,5 +1,5 @@
 from flask import Flask, request
-from .chat_logic.chat_logic_main import execute_chat
+from chat_logic.chat_logic_main import execute_chat
 import json
 import requests
 from linebot.v3 import WebhookHandler
@@ -65,7 +65,7 @@ class LineBotApp:
             ############### text ################
             if msg_type == 'text':
                 msg = str(json_data['events'][0]['message']['text']) 
-                reply = str(self.chat.execute_chat(msg, []))
+                reply = str(execute_chat(msg, []))
                 # self.record_manager.add_chat_record(user_id, "user", msg, user_information)
                 # reply = str(self.chat.execute_chat(msg, user_information['chat_history']))
                 # self.record_manager.add_chat_record(user_id, "assistant", reply, user_information)
