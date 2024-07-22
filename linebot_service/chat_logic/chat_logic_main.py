@@ -1,6 +1,6 @@
 # 导入必要的模块
 import os
-from .chat_nutrition_tools import get_tools
+from chat_nutrition_tools import get_tools
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage
@@ -20,6 +20,7 @@ class Chat:
         self.llm = ChatOpenAI(model=model, temperature=0.1)
         self.get_tools()
         self.set_prompt()
+        self.build_agent()
 
     def get_tools(self):
         self.tools = get_tools()
@@ -62,8 +63,8 @@ class Chat:
             | OpenAIToolsAgentOutputParser()
             
         )
-
         self.agent_executor = AgentExecutor(agent=agent, tools=self.tools, verbose=True)
+
     # 定义执行聊天逻辑的函数
     def execute_chat(self, input_message, chat_history):
         result = self.agent_executor.invoke({"input": input_message, "chat_history": chat_history})
@@ -74,3 +75,14 @@ class Chat:
             ]
         )
         return result["output"]
+    
+
+def main():
+    chat = Chat()
+    while True:
+        input_message = input("Please input the message: ")
+        chat_history = []
+        output_message = chat.execute_chat(input_message, chat_history)
+        print(output_message)
+if __name__ == '__main__':
+    main()
