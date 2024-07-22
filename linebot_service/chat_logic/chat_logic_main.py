@@ -1,6 +1,6 @@
 # 导入必要的模块
 import os
-from chat_nutrition_tools import get_tools
+from .chat_nutrition_tools import get_tools
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage
