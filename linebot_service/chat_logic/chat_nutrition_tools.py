@@ -5,8 +5,11 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 from langchain.tools.retriever import create_retriever_tool
 from pymongo.mongo_client import MongoClient
-import os
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class NutritionTools:
     def __init__(self):
@@ -17,18 +20,6 @@ class NutritionTools:
             "API-key": "1"
         }
         self.db_uri = os.getenv("MONGODB_URI")
-    # def search_meal_by_name(self, query):
-    #     """
-    #     Searches for meal information by name using TheMealDB API.
-    #     """
-    #     url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={query}"
-
-    #     try:
-    #         response = requests.get(url, headers={"API-key": self.headers["API-key"]})
-    #         response.raise_for_status()
-    #         return response.text
-    #     except requests.exceptions.RequestException as e:
-    #         return f"Error: {e}"
 
     def get_nutrition_with_nlp(self, query):
         """
@@ -48,45 +39,26 @@ class NutritionTools:
             return saved_response
         except requests.exceptions.RequestException as e:
             return f"Error: {e}"
-
-    # def find_restaurant_food(self, query):
-    #     """
-    #     Searches for branded foods in the Nutritionix API based on the search query.
-    #     """
-    #     url = f"https://trackapi.nutritionix.com/v2/search/instant/?query={query}"
-
-    #     try:
-    #         response = requests.get(url, headers=self.headers)
-    #         response.raise_for_status()
-    #         branded_food = response.json()["branded"]
-    #         saved_response = []
-    #         for food in branded_food:
-    #             keys_to_save = set(['food_name', 'brand_name_item_name', 'brand_name'])
-    #             saved_food_info = {key: value for key, value in food.items() if key in keys_to_save}
-    #             saved_response.append(saved_food_info)
-    #         return saved_response
-    #     except requests.exceptions.RequestException as e:
-    #         return f"Error: {e}"
         
     def top_results(self, query):
         search = GoogleSearchAPIWrapper()
         return search.results(query, 3)
     
-    def rag_knowledge(self):
-        DB_NAME = "nutri_knowledge"
-        COLLECTION_NAME = "usaid_handbook"
-        ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
-        vector_search = MongoDBAtlasVectorSearch.from_connection_string(
-            self.db_uri,
-            DB_NAME + "." + COLLECTION_NAME,
-            OpenAIEmbeddings(disallowed_special=()),
-            index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
-        )
-        retriever = vector_search.as_retriever(
-            search_type="similarity",
-            search_kwargs={"k": 1},
-        )
-        return retriever
+    # def rag_knowledge(self):
+    #     DB_NAME = "nutri_knowledge"
+    #     COLLECTION_NAME = "usaid_handbook"
+    #     ATLAS_VECTOR_SEARCH_INDEX_NAME = "vector_index"
+    #     vector_search = MongoDBAtlasVectorSearch.from_connection_string(
+    #         self.db_uri,
+    #         DB_NAME + "." + COLLECTION_NAME,
+    #         OpenAIEmbeddings(disallowed_special=()),
+    #         index_name=ATLAS_VECTOR_SEARCH_INDEX_NAME,
+    #     )
+    #     retriever = vector_search.as_retriever(
+    #         search_type="similarity",
+    #         search_kwargs={"k": 1},
+    #     )
+    #     return retriever
     
 # class RecipeInput(BaseModel):
 #     query: str = Field(description="food name")
@@ -124,21 +96,22 @@ def get_tools():
     #     args_schema=RestaurantInput
     # )
     
-    google_search_tool = StructuredTool.from_function(
-        func=nutrition_tools.top_results,
-        name="google_search",
-        description="Search Google for related results",
-        args_schema=GoogleSearch
-    )
+    # google_search_tool = StructuredTool.from_function(
+    #     func=nutrition_tools.top_results,
+    #     name="google_search",
+    #     description="Search Google for related results",
+    #     args_schema=GoogleSearch
+    # )
     
 
-    retriever = nutrition_tools.rag_knowledge()
+    # retriever = nutrition_tools.rag_knowledge()
 
-    rag_knowledge_tool = create_retriever_tool(
-        retriever,
-        "search_nutrition_knowledge",
-        "Searches and returns nutrition knowledge.",
-    )
+    # rag_knowledge_tool = create_retriever_tool(
+    #     retriever,
+    #     "search_nutrition_knowledge",
+    #     "Searches and returns nutrition knowledge.",
+    # )
     # tools = [recipe_tool, nutrition_tool, restaurant_food_tool, google_search_tool]
-    tools = [nutrition_tool, google_search_tool, rag_knowledge_tool]
+    # tools = [nutrition_tool, google_search_tool]
+    tools = [nutrition_tool]
     return tools
