@@ -60,18 +60,13 @@ class LineBotApp:
             logging.info(f"Request body: {body}")
             # 顯示載入動畫
             self.display_loading_animation(user_id)
-            # user_information = self.record_manager.get_or_create_user_usage(user_id)
-            
             ############### text ################
             if msg_type == 'text':
-                msg = str(json_data['events'][0]['message']['text']) 
-                reply = str(self.chat.execute_chat(msg, []))
-                # self.record_manager.add_chat_record(user_id, "user", msg, user_information)
-                # reply = str(self.chat.execute_chat(msg, user_information['chat_history']))
-                # self.record_manager.add_chat_record(user_id, "assistant", reply, user_information)
+                msg = str(json_data['events'][0]['message']['text'])
+                reply = str(self.chat.execute_chat(user_id, msg))
             ############### image ################
             # elif msg_type == 'image':
-                # if user_information['model_version'] == 4 and user_information['GTP 4o frequency of use'] < GPT_4o_Limit:
+                # if user_data['model_version'] == 4 and user_data['GTP 4o frequency of use'] < GPT_4o_Limit:
                 #     # 根據訊息 ID 取得訊息內容
                 #     message_content = self.line_bot_api.get_message_content(json_data['events'][0]['message']['id'])  
                 #     # 設定要儲存圖片的資料夾路徑
@@ -84,7 +79,7 @@ class LineBotApp:
                 #         fd.write(message_content.content)
 
                 #     reply = self.image_description.get_image_description(file_path)
-                #     self.record_manager.add_chat_record(user_id, "assistant", reply, user_information)
+                #     self.record_manager.add_chat_record(user_id, "assistant", reply, user_data)
                 # else:
                 #     reply = "GPT4o模型才能做圖片辨識喔～"
             else:
